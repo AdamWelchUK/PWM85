@@ -2,6 +2,10 @@
   but adapted to work on the ATTiny25/45/85 by Adam Welch (http://adamwelch.co.uk).
   In arduino IDE you will need to add the following to your Additional Board Manager URLs within Preferences:
   https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json
+  
+  For the highest efficiency you should change the ATTiny to an internal 1MHz clock speed - 
+  to apply this setting click Burn Bootloader in the Arduino IDE.
+  
   This code should work on all ATTiny25/45/85s but make sure to select the right one when uploading your code.
   To get thre PWM outputs on the ATTiny*5 (and set them reliably) I found these sites super useful:
   https://forum.arduino.cc/index.php?topic=134754.msg1013479#msg1013479
@@ -11,10 +15,8 @@
 /*Battery Charging Set Point.
 
   This equation is calculated at compile time to set the interger which the charge controller uses as it's modulation set point.
-  By default this is set to a value to charge the battery to 13.5 volts.  Change this number if you wish, and it is also
+  By default this is set to a value to charge the battery to 13.5 volts.  Change this number if you wish. It is also
   reconmended to test the output of the 5 volt regulator and use this equation to calibrate the charge controller.
-
-     setPoint = FloatVoltage * (R2 / (R2+R1)) * (1024 / RegulatorVoltage);
 
   floatVoltage = battery float voltage (13.5 volts by default)
   regulatorVoltage = output from the voltage regulator (5.0 volts typically)
