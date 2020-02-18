@@ -57,12 +57,15 @@ void loop() {
   {
     pulseWidth += stepSize;
     if (pulseWidth > 255) pulseWidth = 255;
+    
   }
   else if (measurement > setPoint)
   {
-    pulseWidth -= stepSize;
+    pulseWidth -= stepSize;    
     if (pulseWidth < 0) pulseWidth = 0;
+    
   }
   analogWrite(4, pulseWidth); //ATTiny Pin 3
+  analogWrite(3, (255 - pulseWidth));
   delay(10);
 }
