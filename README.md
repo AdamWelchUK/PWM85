@@ -10,7 +10,7 @@ For more information about Julians PWM5 see his [YouTube channel](https://www.yo
 Links to components:
 
 |Item|Qty (5v Version)|Qty (3.3v Version)|Link|
-|-----------------------|---|------------------------------------------|
+|-----------------------|---|---|------------------------------------------|
 |Attiny85-20SU| 1 | 1 | http://s.click.aliexpress.com/e/Et5RzhFK |
 |HT7550-1 5v SOP89| 1 | 0 | http://s.click.aliexpress.com/e/dY7ccX6Y |
 |HT7550-1 3.3v SOP89| 0 | 1 | http://s.click.aliexpress.com/e/dY7ccX6Y |
