@@ -1,9 +1,10 @@
 # PWM85
 An ATTiny version of Julian Iletts PWM5 solar charge controller.
 
-Here you will find the latest code, schematic, gerber files and bill of materials (BOM) for this project.
+Here you will find the latest code, schematic, gerber files and bill of materials (BOM) for this project.  I've ended up creating two versions - a 5 volt and 3.3 volt version. I'd suggest going with the 3.3v version because it uses less current to run.
 
-More details about the PWM85 can be seen in this video: https://youtu.be/H_0ykOQyulY
+More details about the PWM85 (5v) can be seen in this video: https://youtu.be/H_0ykOQyulY
+For more about the PWM5 (3.3v) try this video: https://youtu.be/bUxVgbcLFes
 
 For more information about Julians PWM5 see his [YouTube channel](https://www.youtube.com/user/julius256/search?query=PWM5):
 
@@ -12,8 +13,8 @@ Links to components:
 |Item|Qty (5v Version)|Qty (3.3v Version)|Link|
 |-----------------------|---|---|------------------------------------------|
 |Attiny85-20SU| 1 | 1 | http://s.click.aliexpress.com/e/Et5RzhFK |
-|HT7550-1 5v SOP89| 1 | 0 | http://s.click.aliexpress.com/e/dY7ccX6Y |
-|HT7550-1 3.3v SOP89| 0 | 1 | http://s.click.aliexpress.com/e/dY7ccX6Y |
+|HT7550-1 5v SOP89| 1 | 0 | https://s.click.aliexpress.com/e/_sY4ylP |
+|HT7533-1 3.3v SOP89| 0 | 1 | https://s.click.aliexpress.com/e/_sK44Hn |
 |IRF3205STRLPBF| 1 | 1 | http://s.click.aliexpress.com/e/eCBoPOkY |
 |MMBT3904| 1 | 1 | http://s.click.aliexpress.com/e/5NIvXsRI |
 |MMBT3906| 2 | 2 | http://s.click.aliexpress.com/e/k4MYvCgu |
