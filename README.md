@@ -23,12 +23,11 @@ Links to components:
 |1N4148WS| 1 | 1 | http://s.click.aliexpress.com/e/kqy0RsBq |
 |P6KE33CA| 1 | 1 | http://s.click.aliexpress.com/e/ElGVgfDI |
 |PDS1040L-13| 1 | 1 | http://s.click.aliexpress.com/e/BKiTpVtW |
-|1uF Tantalum 16v (1206)| 1 | 1 | http://s.click.aliexpress.com/e/kse9nUJI |
+|1uF Tantalum 25v (1206)| 2 | 2 | http://s.click.aliexpress.com/e/kse9nUJI |
 |4u7 Tantalum 10v (1206)| 1 | 1 | http://s.click.aliexpress.com/e/34nmqFpq |
 |100nF Ceramic (1206)| 1 | 1 | http://s.click.aliexpress.com/e/rDX9xTAY |
 |220pF Ceramic (1206)| 1 | 1 | http://s.click.aliexpress.com/e/q1NDKybW |
 |47nF Ceramic (1206)| 2 | 4 | http://s.click.aliexpress.com/e/KOvnSx1e |
-|1uF Tantalum 25v (1206)| 1 | 1 | http://s.click.aliexpress.com/e/kse9nUJI |
 |82k 1% (1206)| 1 | 1 | http://s.click.aliexpress.com/e/FVhtN6Wk |
 |20k 1% (1206)| 1 | 1 | http://s.click.aliexpress.com/e/t4XNUz08 |
 |220k (1206)| 3 | 3 | http://s.click.aliexpress.com/e/qrlICprK |
