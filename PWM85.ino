@@ -10,36 +10,37 @@
   To get thre PWM outputs on the ATTiny*5 (and set them reliably) I found these sites super useful:
   https://forum.arduino.cc/index.php?topic=134754.msg1013479#msg1013479
   http://www.technoblogy.com/show?LE0
+
+                ATMEL ATTiny85
+                     +-\/-+
+               RST  1|    |8  VCC
+     LED (D 3) PB3  2|    |7  PB2 (A 1) SCK
+  DRIVER (D 4) PB4  3|    |6  PB1 (D 1) MISO
+               GND  4|    |5  PB0 (D 0) MOSI
+                     +----+
+
+ Fuse Settings : Low=0x62, High=0xDF, Ext=0xFF, Lock= 0xFF (1MHz Clock Bootloader)
+ Seems no software BOD disable is available on my ATtiny version (fairly common)
 */
-
-/*Battery Charging Set Point.
-
-  This equation is calculated at compile time to set the interger which the charge controller uses as it's modulation set point.
-  By default this is set to a value to charge the battery to 13.5 volts.  Change this number if you wish. It is also
-  reconmended to test the output of the 5 volt regulator and use this equation to calibrate the charge controller.
-
-  floatVoltage = battery float voltage (13.5 volts by default)
-  regulatorVoltage = output from the voltage regulator (5.0 volts typically)
-  R1 = value of R1 in the circuit (82000 ohms by design)
-  R2 = value of R2 in the circuit (20000 ohms by design)
-*/
-
-//                ATMEL ATTiny85
-//                     +-\/-+
-//               RST  1|    |8  VCC
-//     LED (D 3) PB3  2|    |7  PB2 (D 2) SCK
-//  DRIVER (D 4) PB4  3|    |6  PB1 (D 1) MISO
-//               GND  4|    |5  PB0 (D 0) MOSI
-//                     +----+
-
-// Fuse Settings : Low=0x62, High=0xDF, Ext=0xFF, Lock= 0xFF (1MHz Clock Bootloader)
-// Seems no software BOD disable is available on my ATtiny version (fairly common)
 
 #include <avr/power.h>
 #include <avr/sleep.h>
 #include <avr/wdt.h>
 
 #define wdt_int() WDTCR |= _BV(WDIE) // | _BV(WDCE) | _BV(WDE) // WDT goes to interrupt, not reset
+
+/*Battery Charging Set Point.
+
+  This equation is calculated at compile time to set the interger which the charge controller uses as it's modulation set point.
+  By default this is set to a value to charge the battery to 13.5 volts.  Change this number if you wish. Change this number if you wish - absolute maximum 16.8v
+  
+  It is also reconmended to test the output of the regulator and use this equation to calibrate the charge controller.
+
+  floatVoltage = battery float voltage (13.5 volts by default)
+  regulatorVoltage = output from the voltage regulator (5.0 or 3.3 volts typically - but check yours!)
+  R1 = value of R1 in the circuit (82000 ohms by design)
+  R2 = value of R2 in the circuit (20000 ohms by design)
+*/
 
 #define floatVoltage 13.5
 #define regulatorVoltage 3.3
@@ -54,9 +55,6 @@ int stepSize = 0;
 
 void setup() {
 
-  power_usi_disable(); // Power Register - Shuts down the USI
-  set_sleep_mode(SLEEP_MODE_IDLE); // Configure attiny85 sleep mode
-
   pinMode(0, OUTPUT); // MOSI - PUMP1
   pinMode(1, OUTPUT); // MISO - PUMP2
   pinMode(2, INPUT);  // SCK  - MES
@@ -68,6 +66,9 @@ void setup() {
   TCCR1 = 6 << CS10; // Timer 1 Control Register -  Set Prescaler (1<<CS10 ~ 4kHz, 2 ~ 2kHz, 3 ~ 1kHz, 4 ~ 500Hz, 5 ~ 250Hz, 6 ~ 125Hz, 7 ~ 63Hz)
   GTCCR = 1 << PWM1B | 2 << COM1B0; // General Control Register for Timer 1 - Enable use of pin OC1B, None inverting mode.
 
+  power_usi_disable(); // Power Register - Shuts down the USI
+  set_sleep_mode(SLEEP_MODE_IDLE); // Configure attiny85 sleep mode
+  
   analogWrite(0, 117); //ATTiny85 Pin 5 // OC0A
   analogWrite(1, 137); //ATTiny85 Pin 6 // OC1B
   digitalWrite(3, HIGH); //ATTiny Pin 2
@@ -76,8 +77,8 @@ void setup() {
 }
 
 void loop() {
-  measurement = analogRead(A1); //ATTiny85 Pin 7
-  stepSize = abs(setPoint - measurement);
+  measurement = analogRead(A1); // Read battery voltage
+  stepSize = abs(setPoint - measurement); // Calculate difference from set point
 
   if (measurement < setPoint)
   {
@@ -91,10 +92,10 @@ void loop() {
     if (pulseWidth < 0) pulseWidth = 0;
 
   }
-  analogWrite(4, pulseWidth); //ATTiny Pin 3
-  analogWrite(3, (255 - pulseWidth));
+  analogWrite(4, pulseWidth); // PWM DRIVER
+  analogWrite(3, (255 - pulseWidth)); // PWM LED
 
-  // delay(10);
+  // Sleep ATTiny to save power.
   wdt_enable(WDTO_15MS); // prescale of 8 ~= 15msec
   sleep_mode();          // Make CPU sleep until next WDT interrupt
   wdt_disable();
