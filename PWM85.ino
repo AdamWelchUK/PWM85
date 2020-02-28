@@ -96,9 +96,15 @@ void loop() {
   analogWrite(3, (255 - pulseWidth)); // PWM LED
 
   // Sleep ATTiny to save power.
+  ADCSRA &= ~_BV(ADEN); // ADC off
+  power_adc_disable();
+
   wdt_enable(WDTO_15MS); // prescale of 8 ~= 15msec
   sleep_mode();          // Make CPU sleep until next WDT interrupt
   wdt_disable();
+
+  power_adc_enable();
+  ADCSRA |= _BV(ADEN); // ADC on
 }
 
 // Watchdog Timer Interrupt Service / is executed when watchdog timed out
