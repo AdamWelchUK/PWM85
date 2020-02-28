@@ -100,6 +100,7 @@ void loop() {
   power_adc_disable();
 
   wdt_enable(WDTO_15MS); // prescale of 8 ~= 15msec
+  wdt_int();
   sleep_mode();          // Make CPU sleep until next WDT interrupt
   wdt_disable();
 
