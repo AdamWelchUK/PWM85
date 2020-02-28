@@ -72,7 +72,7 @@ void setup() {
   analogWrite(0, 117); //ATTiny85 Pin 5 // OC0A
   analogWrite(1, 137); //ATTiny85 Pin 6 // OC1B
   digitalWrite(3, HIGH); //ATTiny Pin 2
-  delay(2000);
+  // delay(2000);
   digitalWrite(3, LOW);  // Flash onboard LED to show circuit is working.
 }
 
