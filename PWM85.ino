@@ -61,18 +61,20 @@ void setup() {
   pinMode(3, OUTPUT); // LED
   pinMode(4, OUTPUT); // DRIVER
 
-  TCCR0A = 2 << COM0A0 | 3 << COM0B0 | 3 << WGM00; // Timer 0 Control Register A - Set None Inverting Mode in Fast PWM, Set Inverting Mode in Fast PWM, Enable Fast PWM (11.9.2 in ATTiny85 datasheet)
-  TCCR0B = 0 << WGM02 | 1 << CS00; // Timer 0 Control Register B - Enable Fast PWM, Clock Select Bit no prescaling (11.9.3 in ATTiny85 datasheet)
   TCCR1 = 6 << CS10; // Timer 1 Control Register -  Set Prescaler (1<<CS10 ~ 4kHz, 2 ~ 2kHz, 3 ~ 1kHz, 4 ~ 500Hz, 5 ~ 250Hz, 6 ~ 125Hz, 7 ~ 63Hz)
   GTCCR = 1 << PWM1B | 2 << COM1B0; // General Control Register for Timer 1 - Enable use of pin OC1B, None inverting mode.
 
   power_usi_disable(); // Power Register - Shuts down the USI
   set_sleep_mode(SLEEP_MODE_IDLE); // Configure attiny85 sleep mode
   
-  analogWrite(0, 117); //ATTiny85 Pin 5 // OC0A
-  analogWrite(1, 137); //ATTiny85 Pin 6 // OC1B
   digitalWrite(3, HIGH); //ATTiny Pin 2
   // delay(2000);
+
+  // PWM Timer/Counters 0
+  TCCR0A = 2 << COM0A0 | 3 << COM0B0 | 3 << WGM00; // Timer 0 Control Register A -  Enable Fast PWM, OC0A Non Inverting Mode, OC0B Inverting Mode (OC0A)
+  TCCR0B = 0 << WGM02 | 1 << CS00; // Timer 0 Control Register B - Enable Fast PWM, Clock Select Bit no prescaling
+  OCR0A = 117; // set pwm duty // analogWrite(0, 117); //ATTiny85 Pin 5 // OC0A
+  OCR0B = 137; // set pwm duty // analogWrite(1, 137); //ATTiny85 Pin 6 // OC0B
   digitalWrite(3, LOW);  // Flash onboard LED to show circuit is working.
 }
 
