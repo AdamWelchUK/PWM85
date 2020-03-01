@@ -83,7 +83,13 @@ void setup() {
 }
 
 void loop() {
+
+  power_adc_enable();
+  ADCSRA |= _BV(ADEN); // ADC on
   measurement = analogRead(A1); // Read battery voltage
+  ADCSRA &= ~_BV(ADEN); // ADC off
+  power_adc_disable();
+  
   stepSize = abs(setPoint - measurement); // Calculate difference from set point
 
   if (measurement < setPoint)
@@ -103,16 +109,10 @@ void loop() {
   OCR1B = pulseWidth; // One counter for both outputs
 
   // Sleep ATTiny to save power.
-  ADCSRA &= ~_BV(ADEN); // ADC off
-  power_adc_disable();
-
   wdt_enable(WDTO_15MS); // prescale of 8 ~= 15msec
   wdt_int();
   sleep_mode();          // Make CPU sleep until next WDT interrupt
   wdt_disable();
-
-  power_adc_enable();
-  ADCSRA |= _BV(ADEN); // ADC on
 }
 
 // Watchdog Timer Interrupt Service / is executed when watchdog timed out
