@@ -61,8 +61,6 @@ void setup() {
   pinMode(3, OUTPUT); // LED
   pinMode(4, OUTPUT); // DRIVER
 
-  TCCR1 = 6 << CS10; // Timer 1 Control Register -  Set Prescaler (1<<CS10 ~ 4kHz, 2 ~ 2kHz, 3 ~ 1kHz, 4 ~ 500Hz, 5 ~ 250Hz, 6 ~ 125Hz, 7 ~ 63Hz)
-  GTCCR = 1 << PWM1B | 2 << COM1B0; // General Control Register for Timer 1 - Enable use of pin OC1B, None inverting mode.
 
   power_usi_disable(); // Power Register - Shuts down the USI
   set_sleep_mode(SLEEP_MODE_IDLE); // Configure attiny85 sleep mode
@@ -75,6 +73,10 @@ void setup() {
   TCCR0B = 0 << WGM02 | 1 << CS00; // Timer 0 Control Register B - Enable Fast PWM, Clock Select Bit no prescaling
   OCR0A = 117; // set pwm duty // analogWrite(0, 117); //ATTiny85 Pin 5 // OC0A
   OCR0B = 137; // set pwm duty // analogWrite(1, 137); //ATTiny85 Pin 6 // OC0B
+
+  // PWM Timer/Counter 1
+  TCCR1 = 6 << CS10; // Timer 1 Control Register -  Set Prescaler (1<<CS10 ~ 4kHz, 2 ~ 2kHz, 3 ~ 1kHz, 4 ~ 500Hz, 5 ~ 250Hz, 6 ~ 125Hz, 7 ~ 63Hz)
+  GTCCR = 1 << PWM1B | 1 << COM1B0; // General Control Register for Timer 1 - *PWM*, OC1B and ~OC1B connected.
   digitalWrite(3, LOW);  // Flash onboard LED to show circuit is working.
 }
 
@@ -94,8 +96,9 @@ void loop() {
     if (pulseWidth < 0) pulseWidth = 0;
 
   }
-  analogWrite(4, pulseWidth); // PWM DRIVER
-  analogWrite(3, (255 - pulseWidth)); // PWM LED
+  //analogWrite(4, pulseWidth); // PWM DRIVER
+  //analogWrite(3, (255 - pulseWidth)); // PWM LED
+  OCR1B = pulseWidth; // One counter for both outputs
 
   // Sleep ATTiny to save power.
   ADCSRA &= ~_BV(ADEN); // ADC off
