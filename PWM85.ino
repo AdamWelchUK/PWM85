@@ -35,6 +35,7 @@ void setup() {
   set_sleep_mode(SLEEP_MODE_IDLE); // Configure attiny85 sleep mode
 
   PWM_setup_Pump();
+  PWM_setup_Driver();
 
   WDT_Sleep_2S();
 }
@@ -43,7 +44,7 @@ void loop() {
 
   PWR_start_ADC();
   measurement = analogRead(A1); // Read battery voltage
-  PWR_start_ADC();
+  PWR_stop_ADC();
 
   stepSize = abs(setPoint - measurement); // Calculate difference from set point
 
