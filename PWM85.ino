@@ -31,8 +31,14 @@ void setup() {
   pinMode(LED_Pin, OUTPUT);  // LED
   pinMode(DRV_Pin, OUTPUT);  // DRIVER
 
-  power_all_disable(); // Power Register - Shuts down the USI
-  set_sleep_mode(SLEEP_MODE_PWR_DOWN); // Configure attiny85 sleep mode
+  power_usi_disable(); // Power Register - Shuts down the USI
+  PWR_stop_ADC();
+
+  set_sleep_mode(SLEEP_MODE_IDLE); // Configure attiny85 sleep mode
+
+  PWM_setup_Pump();
+  PWM_setup_Driver();
+  OCR1B = 0;
 
   WDT_Sleep_2S();
 }
@@ -56,29 +62,6 @@ void loop() {
     if (pulseWidth < 0) pulseWidth = 0;
   }
 
-  if (pulseWidth == 0)
-  {
-    digitalWrite(DRV_Pin, LOW);
-    digitalWrite(LED_Pin, HIGH);
-    PWM_stop_Driver();
-    PWM_stop_Pump();
-    set_sleep_mode(SLEEP_MODE_PWR_DOWN);
-  }
-  else if (pulseWidth == 255)
-  {
-    PWM_start_Pump();
-    digitalWrite(DRV_Pin, HIGH);
-    digitalWrite(LED_Pin, LOW);
-    PWM_stop_Driver();
-    set_sleep_mode(SLEEP_MODE_IDLE);
-  }
-  else
-  {
-    PWM_start_Pump();
-    PWM_start_Driver();
-    OCR1B = pulseWidth; // One counter for both outputs
-    set_sleep_mode(SLEEP_MODE_IDLE);
-  }
-
+  OCR1B = pulseWidth; // One counter for both outputs
   WDT_Sleep_15MS();
 }
