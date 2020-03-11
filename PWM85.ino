@@ -30,8 +30,8 @@
 
 const int setPoint = floatV * R2 / (R2 + R1) * 1024 / regulatorV;
 int measurement = 0;
-int pulseWidth = 0;
 int stepSize = 0;
+int pulseWidth = 0;
 
 ////////////////////
 void setup()
@@ -61,16 +61,9 @@ void loop()
   measurement = analogRead(A1); // Read battery voltage
   PWR_stop_ADC(); // Stop ADC to save power
 
-  stepSize = abs(setPoint - measurement); // Calculate difference from set point
-
-  if (measurement < setPoint) // If battery voltage less than setPoint, increase duty cycle
-  {
-    if (pulseWidth < 255) pulseWidth += stepSize; // prevent wrap around
-  }
-  else if (measurement > setPoint) // If battery voltage more than setPoint, decrease duty cycle
-  {
-    if (pulseWidth > 0) pulseWidth -= stepSize; // prevent wrap around
-  }
+  stepSize = setPoint - measurement; // Important : Can be negative
+  pulseWidth += stepSize;            // Can decrease too!
+  pulseWidth = constrain(pulseWidth, 0, 255); // prevent wrap around
 
   OCR1B = pulseWidth; // Write pulseWidth value to both mosfet and led pins.
   WDT_Sleep(WDTO_60MS);
