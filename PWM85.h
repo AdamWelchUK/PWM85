@@ -20,12 +20,12 @@
 /* Battery Charging Set Point.
 
   This equation is calculated at compile time to set the interger which the charge controller uses as it's modulation set point.
-  By default this is set to a value to charge the battery to 13.5 volts.  Change this number if you wish. Change this number if you wish - absolute maximum 16.8v
+  By default this is set to a value to charge the battery to 13.5 volts.  Change this number if you wish - absolute maximum 16.8v
 
   It is also reconmended to test the output of the regulator and use this equation to calibrate the charge controller.
 
-  floatVoltage = battery float voltage (13.5 volts by default)
-  regulatorVoltage = output from the voltage regulator (5.0 or 3.3 volts typically - but check yours!)
+  floatV = battery float voltage (13.5 volts by default)
+  regulatorV = output from the voltage regulator (5.0 or 3.3 volts typically - but check yours!)
   R1 = value of R1 in the circuit (82000 ohms by design)
   R2 = value of R2 in the circuit (20000 ohms by design)
 */
