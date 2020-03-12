@@ -18,8 +18,6 @@
 
   Once you have installed this board definition, you can disable the millis()/micros() to save power.
 
-  Set the Clock to 1MHz and burn the bootloader to set the fuses.
-
   This code should work on all ATTiny25/45/85s but make sure to select the right one when uploading your code.
   To get three PWM outputs on the ATTiny (and set them reliably) I found these sites super useful:
   https://forum.arduino.cc/index.php?topic=134754.msg1013479#msg1013479
