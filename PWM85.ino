@@ -9,7 +9,8 @@
 /*
   ArduinoIDE
   To program the ATTiny in the arduino IDE you will need the board definitions installing.  I suggest installing
-  Spence Konde's ATTinyCore which is available in the board manager (Tools - Board - Board Manager - search for ATTinyCore)
+  Spence Konde's ATTinyCore. Add this address to your additional board manager URLs in preferences http://drazzy.com/package_drazzy.com_index.json
+  Now you can add the board definitions using the board manager (Tools - Board - Board Manager - search for ATTinyCore).
 
   For the highest efficiency you should change the ATTiny to an internal 1MHz clock speed -
   to apply this setting click Burn Bootloader in the Arduino IDE.
